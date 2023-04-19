@@ -1,0 +1,16 @@
+<div>
+  <prizm-input-layout label="Поиск">
+    <input prizmInput (enter)="search($event)" #input />
+    <button
+      prizmInputIconButton="sort-zoom-in"
+      prizm-input-right
+      (click)="search(input.value)"
+      [interactive]="true"
+    ></button>
+  </prizm-input-layout>
+  <prizm-navigation
+    class="test"
+    [data]="data"
+    [activeElement]="data[0]"
+  ></prizm-navigation>
+</div>
