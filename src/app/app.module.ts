@@ -1,5 +1,6 @@
 // Angular
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -20,12 +21,13 @@ import { NavigationComponent } from './components/navigation/navigation.componen
   declarations: [AppComponent, NavigationComponent],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     PrizmThemeModule,
     PrizmButtonModule,
     PrizmNavigationModule,
     PrizmInputTextModule,
-    PrizmIconsSvgModule
+    PrizmIconsSvgModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,16 +1,23 @@
-<div>
-  <prizm-input-layout label="Поиск">
-    <input prizmInput (enter)="search($event)" #input />
-    <button
-      prizmInputIconButton="sort-zoom-in"
-      prizm-input-right
-      (click)="search(input.value)"
-      [interactive]="true"
-    ></button>
-  </prizm-input-layout>
-  <prizm-navigation
-    class="test"
-    [data]="data"
-    [activeElement]="data[0]"
-  ></prizm-navigation>
-</div>
+<prizm-input-layout label="Выбор конфигурационного файла" [outer]="true">
+  <input
+    #input
+    prizmInput
+    placeholder="Запрос"
+    (enter)="search($event)"
+    [formControl]="requiredInputControl"
+  />
+  <button
+    prizm-input-right
+    prizmInputIconButton="sort-zoom-in"
+    (click)="search(input.value)"
+    [interactive]="true"
+  ></button>
+  <ng-template prizmInputStatusText [control]="input"></ng-template>
+  <prizm-input-status-subtext prizm-input-subtext [control]="input">
+  </prizm-input-status-subtext>
+</prizm-input-layout>
+<prizm-navigation
+  class="test"
+  [data]="data"
+  [activeElement]="data[0]"
+></prizm-navigation>
