@@ -1,0 +1,48 @@
+<div [prizmTheme]="'dark'">
+  <div [prizmTheme]="'dark'">
+    <prizm-widget title="Информация о документе">
+      <prizm-input-layout label="Название документа" [outer]="true">
+        <input
+          #nameInput
+          prizmInput
+          placeholder="Введенный текст"
+          [formControl]="requiredNameInputControl"
+        />
+        <ng-template prizmInputStatusText [control]="nameInput"></ng-template>
+        <prizm-input-status-subtext prizm-input-subtext [control]="nameInput">
+        </prizm-input-status-subtext>
+      </prizm-input-layout>
+      <prizm-input-layout label="Описание документа" [outer]="true">
+        <input
+          #descriptionInput
+          prizmInput
+          placeholder="Введенный текст"
+          [formControl]="requiredDescriptionInputControl"
+        />
+        <ng-template
+          prizmInputStatusText
+          [control]="descriptionInput"
+        ></ng-template>
+        <prizm-input-status-subtext
+          prizm-input-subtext
+          [control]="descriptionInput"
+        >
+        </prizm-input-status-subtext>
+      </prizm-input-layout>
+    </prizm-widget>
+    <prizm-widget title="Конфигурация">
+      <prizm-input-layout label="Содержимое документа" [outer]="true">
+        <textarea
+          #textarea
+          prizmInput
+          placeholder="Введите текст"
+          [height]="720"
+          [formControl]="requiredTextareaControl"
+        ></textarea>
+        <ng-template prizmInputStatusText [control]="textarea"></ng-template>
+        <prizm-input-status-subtext prizm-input-subtext [control]="textarea">
+        </prizm-input-status-subtext>
+      </prizm-input-layout>
+    </prizm-widget>
+  </div>
+</div>

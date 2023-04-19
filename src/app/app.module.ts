@@ -9,6 +9,7 @@ import {
   PrizmButtonModule,
   PrizmNavigationModule,
   PrizmInputTextModule,
+  PrizmWidgetModule
 } from '@prizm-ui/components';
 import { PrizmThemeModule } from '@prizm-ui/theme';
 import { PrizmIconsSvgModule } from '@prizm-ui/icons';
@@ -16,13 +17,15 @@ import { PrizmIconsSvgModule } from '@prizm-ui/icons';
 // Components
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { ContentComponent } from './components/content/content.component';
 
 @NgModule({
-  declarations: [AppComponent, NavigationComponent],
+  declarations: [AppComponent, NavigationComponent, ContentComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    PrizmWidgetModule,
     PrizmThemeModule,
     PrizmButtonModule,
     PrizmNavigationModule,
