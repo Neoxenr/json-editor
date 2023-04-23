@@ -3,32 +3,46 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
 // Prizm UI
-import { INavigationTree } from '@prizm-ui/components';
+import { PrizmNavigationMenuItem } from '@prizm-ui/components';
+
+// Models
+import { Document } from '../../models/document';
+
+// Services
+import { DocumentService } from '../../services/document.service';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.less'],
+  providers: [DocumentService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationComponent implements OnInit {
   public requiredInputControl = new FormControl('', Validators.required);
 
-  public data: INavigationTree[] = [
-    { title: 'Документ 1' },
-    { title: 'Документ 2' },
-    { title: 'Файл 3' },
-    { title: 'Файл 4' },
-    { title: 'Файл 4' },
-    { title: 'Файл 4' },
-    { title: 'Файл 4' },
-  ];
+  // ?
+  public documents: Document[];
 
-  constructor() {}
+  public items: PrizmNavigationMenuItem[] = [];
 
-  ngOnInit(): void {}
+  constructor(private documentService: DocumentService) {
+    this.documents = [];
 
-  public search(value: string): void {
-    console.log('value :>> ', value);
+    this.items = [];
   }
+
+  ngOnInit(): void {
+    this.documentService.getDocuments().subscribe({
+      next: (data: Document[]) => {
+        this.documents = data;
+
+        this.items = data.map((document: Document) => ({
+          text: document.name,
+        }));
+      },
+    });
+  }
+
+  public search(value: string): void {}
 }

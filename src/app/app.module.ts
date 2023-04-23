@@ -3,13 +3,15 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule }   from '@angular/common/http';
 
 // Prizm UI
 import {
   PrizmButtonModule,
-  PrizmNavigationModule,
   PrizmInputTextModule,
-  PrizmWidgetModule
+  PrizmWidgetModule,
+  PrizmScrollbarModule,
+  PrizmNavigationMenuModule,
 } from '@prizm-ui/components';
 import { PrizmThemeModule } from '@prizm-ui/theme';
 import { PrizmIconsSvgModule } from '@prizm-ui/icons';
@@ -25,12 +27,14 @@ import { ContentComponent } from './components/content/content.component';
     BrowserModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     PrizmWidgetModule,
+    PrizmScrollbarModule,
     PrizmThemeModule,
     PrizmButtonModule,
-    PrizmNavigationModule,
     PrizmInputTextModule,
     PrizmIconsSvgModule,
+    PrizmNavigationMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
