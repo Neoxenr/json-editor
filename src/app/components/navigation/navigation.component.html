@@ -16,4 +16,7 @@
   <prizm-input-status-subtext prizm-input-subtext [control]="input">
   </prizm-input-status-subtext>
 </prizm-input-layout>
-<prizm-navigation-menu [items]="items"></prizm-navigation-menu>
+<prizm-navigation-menu
+  [items]="items"
+  (activeItemChanged)="test($event)"
+></prizm-navigation-menu>

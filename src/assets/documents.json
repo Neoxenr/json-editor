@@ -1,160 +1,192 @@
 [
   {
+    "id": 1,
     "name": "Документ 1",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 2,
     "name": "Документ 2",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 3,
     "name": "Файл 3",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 4,
     "name": "Файл 4",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 5,
     "name": "Файл 5",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 6,
     "name": "Файл 6",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 7,
     "name": "Файл 7",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 8,
     "name": "Файл 8",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 9,
     "name": "Файл 9",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 10,
     "name": "Файл 10",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 11,
     "name": "Файл 11",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 12,
     "name": "Файл 12",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 13,
     "name": "Файл 13",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 14,
     "name": "Файл 14",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 15,
     "name": "Файл 15",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 16,
     "name": "Файл 16",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 17,
     "name": "Файл 16",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 18,
     "name": "Файл 16",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 19,
     "name": "Файл 16",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 20,
     "name": "Файл 16",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 21,
     "name": "Файл 16",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 22,
     "name": "Файл 16",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 23,
     "name": "Файл 16",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 24,
     "name": "Файл 16",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 25,
     "name": "Файл 16",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 26,
     "name": "Файл 16",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 27,
     "name": "Файл 16",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 28,
     "name": "Файл 16",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 29,
     "name": "Файл 16",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 30,
     "name": "Файл 16",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 31,
     "name": "Файл 16",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"
   },
   {
+    "id": 32,
     "name": "Файл 16",
     "description": "Описание документа",
     "configuration": "{\"Hello\":\"World!\"}"

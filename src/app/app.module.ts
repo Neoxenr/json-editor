@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule }   from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 // Prizm UI
 import {
@@ -16,6 +16,9 @@ import {
 import { PrizmThemeModule } from '@prizm-ui/theme';
 import { PrizmIconsSvgModule } from '@prizm-ui/icons';
 
+// Routing
+import { AppRoutingModule } from './app-routing.module';
+
 // Components
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -24,6 +27,7 @@ import { ContentComponent } from './components/content/content.component';
 @NgModule({
   declarations: [AppComponent, NavigationComponent, ContentComponent],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,

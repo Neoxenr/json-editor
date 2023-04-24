@@ -1,6 +1,14 @@
 // Angular
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  OnDestroy,
+} from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+
+// RxJS
+import { Subscription } from 'rxjs';
 
 // Prizm UI
 import { PrizmNavigationMenuItem } from '@prizm-ui/components';
@@ -18,13 +26,15 @@ import { DocumentService } from '../../services/document.service';
   providers: [DocumentService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent implements OnInit, OnDestroy {
   public requiredInputControl = new FormControl('', Validators.required);
 
   // ?
   public documents: Document[];
 
-  public items: PrizmNavigationMenuItem[] = [];
+  public items: PrizmNavigationMenuItem[];
+
+  private documentsSubscription: Subscription | undefined;
 
   constructor(private documentService: DocumentService) {
     this.documents = [];
@@ -32,8 +42,12 @@ export class NavigationComponent implements OnInit {
     this.items = [];
   }
 
+  test(t: any): void {
+    console.log('t :>> ', t);
+  }
+
   ngOnInit(): void {
-    this.documentService.getDocuments().subscribe({
+    this.documentsSubscription = this.documentService.getDocuments().subscribe({
       next: (data: Document[]) => {
         this.documents = data;
 
@@ -42,6 +56,10 @@ export class NavigationComponent implements OnInit {
         }));
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    this.documentsSubscription?.unsubscribe();
   }
 
   public search(value: string): void {}
