@@ -6,15 +6,14 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 // RxJS
 import { Subscription } from 'rxjs';
 
-// Prizm UI
-import { PrizmNavigationMenuItem } from '@prizm-ui/components';
-
 // Models
 import { Document } from '../../models/document';
+import { CustomItem } from '../../models/custom-item';
 
 // Services
 import { DocumentService } from '../../services/document.service';
@@ -29,29 +28,22 @@ import { DocumentService } from '../../services/document.service';
 export class NavigationComponent implements OnInit, OnDestroy {
   public requiredInputControl = new FormControl('', Validators.required);
 
-  // ?
-  public documents: Document[];
-
-  public items: PrizmNavigationMenuItem[];
+  public items: CustomItem[];
 
   private documentsSubscription: Subscription | undefined;
 
-  constructor(private documentService: DocumentService) {
-    this.documents = [];
-
+  constructor(
+    private documentService: DocumentService,
+    private router: Router
+  ) {
     this.items = [];
-  }
-
-  test(t: any): void {
-    console.log('t :>> ', t);
   }
 
   ngOnInit(): void {
     this.documentsSubscription = this.documentService.getDocuments().subscribe({
       next: (data: Document[]) => {
-        this.documents = data;
-
         this.items = data.map((document: Document) => ({
+          id: document.id,
           text: document.name,
         }));
       },
@@ -60,6 +52,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.documentsSubscription?.unsubscribe();
+  }
+
+  public activeItemChanged(item: any): void {
+    this.router.navigate(['/documents', item.id]);
   }
 
   public search(value: string): void {}

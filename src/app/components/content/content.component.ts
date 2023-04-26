@@ -1,5 +1,10 @@
 // Angular
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+} from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -9,9 +14,18 @@ import { FormControl, Validators } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContentComponent implements OnInit {
+  @Input() name: string | undefined = '';
+
+  @Input() description: string | undefined = '';
+
+  @Input() configuration: string | undefined = '';
+
   public requiredNameInputControl = new FormControl('', Validators.required);
 
-  public requiredDescriptionInputControl = new FormControl('', Validators.required);
+  public requiredDescriptionInputControl = new FormControl(
+    '',
+    Validators.required
+  );
 
   public requiredTextareaControl = new FormControl('', Validators.required);
 

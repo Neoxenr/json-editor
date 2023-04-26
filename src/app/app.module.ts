@@ -23,9 +23,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { ContentComponent } from './components/content/content.component';
+import { DocumentsComponent } from './pages/documents/documents.component';
+import { DocumentComponent } from './pages/document/document.component';
 
 @NgModule({
-  declarations: [AppComponent, NavigationComponent, ContentComponent],
+  declarations: [
+    AppComponent,
+    NavigationComponent,
+    ContentComponent,
+    DocumentsComponent,
+    DocumentComponent,
+  ],
   imports: [
     AppRoutingModule,
     BrowserModule,

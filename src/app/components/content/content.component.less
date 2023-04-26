@@ -1,3 +1,21 @@
 :host {
-  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .configuration {
+    flex: 1;
+
+    ::ng-deep prizm-card {
+      height: calc(100% - 60px);
+
+      ::ng-deep .body {
+        height: 100%;
+
+        .input-layout {
+          height: calc(100% - 30px);
+        }
+      }
+    }
+  }
 }
