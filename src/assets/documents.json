@@ -3,7 +3,7 @@
     "id": "1",
     "name": "Документ 1",
     "description": "Описание документа",
-    "configuration": "{\"Hello\":\"World!\"}"
+    "configuration": "{\"TEST\":\"World!\",\"TEST1\":\"World!\",\"TEST2\":\"World!\",\"TEST3\":\"World!\"}"
   },
   {
     "id": "2",

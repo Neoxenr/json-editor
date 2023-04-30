@@ -6,6 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { FormControl, Validators } from '@angular/forms';
 
 // RxJS
 import { Subscription } from 'rxjs';
@@ -21,9 +22,14 @@ import { Document } from '../../models/document';
   templateUrl: './document.component.html',
   styleUrls: ['./document.component.less'],
   providers: [DocumentService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DocumentComponent implements OnInit, OnDestroy {
-  public document: Document | undefined;
+  public nameControl = new FormControl('', Validators.required);
+
+  public descriptionControl = new FormControl('', Validators.required);
+
+  public configurationControl = new FormControl('', Validators.required);
 
   private subscription: Subscription | undefined;
 
@@ -40,12 +46,25 @@ export class DocumentComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (data: Document | undefined) => {
-          this.document = data;
+          this.nameControl.setValue(data?.name);
+          this.descriptionControl.setValue(data?.description);
+          this.configurationControl.setValue(data?.configuration);
         },
       });
   }
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
+  }
+
+  onIconClick(iconName: string): void {
+    switch (iconName) {
+      case 'editor-auto':
+        this.configurationControl.setValue(
+          JSON.stringify(JSON.parse(this.configurationControl.value), null, 2)
+        );
+
+        break;
+    }
   }
 }

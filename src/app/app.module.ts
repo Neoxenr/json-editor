@@ -12,6 +12,7 @@ import {
   PrizmWidgetModule,
   PrizmScrollbarModule,
   PrizmNavigationMenuModule,
+  PrizmPanelModule,
 } from '@prizm-ui/components';
 import { PrizmThemeModule } from '@prizm-ui/theme';
 import { PrizmIconsSvgModule } from '@prizm-ui/icons';
@@ -22,7 +23,6 @@ import { AppRoutingModule } from './app-routing.module';
 // Components
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
-import { ContentComponent } from './components/content/content.component';
 import { DocumentsComponent } from './pages/documents/documents.component';
 import { DocumentComponent } from './pages/document/document.component';
 
@@ -30,7 +30,6 @@ import { DocumentComponent } from './pages/document/document.component';
   declarations: [
     AppComponent,
     NavigationComponent,
-    ContentComponent,
     DocumentsComponent,
     DocumentComponent,
   ],
@@ -47,6 +46,7 @@ import { DocumentComponent } from './pages/document/document.component';
     PrizmInputTextModule,
     PrizmIconsSvgModule,
     PrizmNavigationMenuModule,
+    PrizmPanelModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
