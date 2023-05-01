@@ -4,7 +4,7 @@
       #nameInput
       prizmInput
       placeholder="Введенный текст"
-      [formControl]="nameControl"
+      [formControl]="name"
     />
     <ng-template prizmInputStatusText [control]="nameInput"></ng-template>
     <prizm-input-status-subtext prizm-input-subtext [control]="nameInput">
@@ -15,7 +15,7 @@
       #descriptionInput
       prizmInput
       placeholder="Введенный текст"
-      [formControl]="descriptionControl"
+      [formControl]="description"
     />
     <ng-template
       prizmInputStatusText
@@ -43,10 +43,18 @@
       #textarea
       prizmInput
       placeholder="Введите текст"
-      [formControl]="configurationControl"
+      [formControl]="configuration"
     ></textarea>
     <ng-template prizmInputStatusText [control]="textarea"></ng-template>
     <prizm-input-status-subtext prizm-input-subtext [control]="textarea">
     </prizm-input-status-subtext>
   </prizm-input-layout>
 </prizm-widget>
+<button
+  prizmButton
+  class="btn-save"
+  [disabled]="name.invalid || description.invalid || configuration.invalid"
+  (click)="onClickSave()"
+>
+  Сохранить изменения
+</button>

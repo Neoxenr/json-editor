@@ -40,12 +40,9 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.documentsSubscription = this.documentService.getDocuments().subscribe({
+    this.documentsSubscription = this.documentService.getAll().subscribe({
       next: (data: Document[]) => {
-        this.items = data.map((document: Document) => ({
-          id: document.id,
-          text: document.name,
-        }));
+        this.items = data;
       },
     });
   }

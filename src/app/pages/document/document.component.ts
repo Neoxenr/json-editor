@@ -2,8 +2,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  OnChanges,
   OnDestroy,
   OnInit,
+  SimpleChanges,
 } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
@@ -25,13 +27,16 @@ import { Document } from '../../models/document';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DocumentComponent implements OnInit, OnDestroy {
-  public nameControl = new FormControl('', Validators.required);
+  public id: string = '';
 
-  public descriptionControl = new FormControl('', Validators.required);
+  public name = new FormControl('', Validators.required);
 
-  public configurationControl = new FormControl('', Validators.required);
+  public description = new FormControl('', Validators.required);
 
-  private subscription: Subscription | undefined;
+  public configuration = new FormControl('', Validators.required);
+
+  private documentSubscription: Subscription | undefined;
+  private updateSubscription: Subscription | undefined;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -39,32 +44,53 @@ export class DocumentComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscription = this.activatedRoute.paramMap
+    this.documentSubscription = this.activatedRoute.paramMap
       .pipe(
         switchMap((params: ParamMap) => params.getAll('id')),
-        mergeMap((id: string) => this.documentService.getDocumentById(id))
+        mergeMap((id: string) => {
+          this.id = id;
+
+          return this.documentService.getById(id);
+        })
       )
       .subscribe({
         next: (data: Document | undefined) => {
-          this.nameControl.setValue(data?.name);
-          this.descriptionControl.setValue(data?.description);
-          this.configurationControl.setValue(data?.configuration);
+          this.name.setValue(data?.text);
+          this.description.setValue(data?.description);
+          this.configuration.setValue(data?.configuration);
+
+          this.onIconClick('editor-auto');
         },
       });
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this.documentSubscription?.unsubscribe();
+
+    this.updateSubscription?.unsubscribe();
   }
 
   onIconClick(iconName: string): void {
     switch (iconName) {
       case 'editor-auto':
-        this.configurationControl.setValue(
-          JSON.stringify(JSON.parse(this.configurationControl.value), null, 2)
-        );
+        // поправишь
+        if (!this.configuration.invalid) {
+          this.configuration.setValue(
+            JSON.stringify(JSON.parse(this.configuration.value), null, 2)
+          );
+        }
 
         break;
     }
+  }
+
+  onClickSave(): void {
+    this.updateSubscription = this.documentService
+      .update(this.id, {
+        text: this.name.value,
+        description: this.description.value,
+        configuration: this.configuration.value,
+      })
+      .subscribe();
   }
 }
