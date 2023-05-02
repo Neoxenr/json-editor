@@ -2,10 +2,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnChanges,
   OnDestroy,
   OnInit,
-  SimpleChanges,
 } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
@@ -27,13 +25,16 @@ import { Document } from '../../models/document';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DocumentComponent implements OnInit, OnDestroy {
-  public id: string = '';
+  public name: FormControl = new FormControl('', Validators.required);
+  public description: FormControl = new FormControl('', Validators.required);
+  public configuration: FormControl = new FormControl('{}', [
+    Validators.required,
+    this.configurationValidator.bind(this),
+  ]);
 
-  public name = new FormControl('', Validators.required);
+  private id: string = '';
 
-  public description = new FormControl('', Validators.required);
-
-  public configuration = new FormControl('', Validators.required);
+  private parsedConfiguration: Object = {};
 
   private documentSubscription: Subscription | undefined;
   private updateSubscription: Subscription | undefined;
@@ -76,10 +77,9 @@ export class DocumentComponent implements OnInit, OnDestroy {
         // поправишь
         if (!this.configuration.invalid) {
           this.configuration.setValue(
-            JSON.stringify(JSON.parse(this.configuration.value), null, 2)
+            JSON.stringify(this.parsedConfiguration, null, 2)
           );
         }
-
         break;
     }
   }
@@ -92,5 +92,17 @@ export class DocumentComponent implements OnInit, OnDestroy {
         configuration: this.configuration.value,
       })
       .subscribe();
+  }
+
+  configurationValidator(
+    control: FormControl
+  ): { [field: string]: boolean } | null {
+    try {
+      this.parsedConfiguration = JSON.parse(control.value);
+
+      return null;
+    } catch (exception) {
+      return { configuration: true };
+    }
   }
 }

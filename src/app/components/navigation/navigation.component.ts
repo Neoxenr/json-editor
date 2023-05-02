@@ -51,9 +51,9 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.documentsSubscription?.unsubscribe();
   }
 
-  public activeItemChanged(item: any): void {
+  activeItemChanged(item: any): void {
     this.router.navigate(['/documents', item.id]);
   }
 
-  public search(value: string): void {}
+  search(value: string): void {}
 }
