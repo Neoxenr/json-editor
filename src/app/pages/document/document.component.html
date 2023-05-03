@@ -8,18 +8,23 @@
       #nameInput
       prizmInput
       placeholder="Введенный текст"
-      [formControl]="name"
+      [formControl]="$any(form.controls['name'])"
     />
     <ng-template prizmInputStatusText [control]="nameInput"></ng-template>
     <prizm-input-status-subtext prizm-input-subtext [control]="nameInput">
     </prizm-input-status-subtext>
   </prizm-input-layout>
-  <prizm-input-layout label="Описание документа" [outer]="true" [prizmSkeleton]="isLoading">
+  <prizm-input-layout
+    label="Описание документа"
+    class="description"
+    [outer]="true"
+    [prizmSkeleton]="isLoading"
+  >
     <input
       #descriptionInput
       prizmInput
       placeholder="Введенный текст"
-      [formControl]="description"
+      [formControl]="$any(form.controls['description'])"
     />
     <ng-template
       prizmInputStatusText
@@ -48,7 +53,7 @@
       #textarea
       prizmInput
       placeholder="Введите текст"
-      [formControl]="configuration"
+      [formControl]="$any(form.controls['configuration'])"
     ></textarea>
     <ng-template prizmInputStatusText [control]="textarea"></ng-template>
     <prizm-input-status-subtext prizm-input-subtext [control]="textarea">
@@ -58,12 +63,7 @@
 <button
   prizmButton
   class="btn-save"
-  [disabled]="
-    name.invalid ||
-    description.invalid ||
-    configuration.invalid ||
-    (name.pristine && description.pristine && configuration.pristine)
-  "
+  [disabled]="form.invalid || form.pristine"
   [prizmSkeleton]="isLoading"
   [showLoader]="isSaving"
   (click)="onClickSave()"

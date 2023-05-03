@@ -1,10 +1,5 @@
 // Angular
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  OnDestroy,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -25,20 +20,17 @@ import { DocumentService } from '../../services/document.service';
   providers: [DocumentService],
 })
 export class NavigationComponent implements OnInit, OnDestroy {
-  public items: CustomItem[];
+  public items: CustomItem[] = [];
+  public allItems: CustomItem[] = [];
 
   public isLoading: boolean = false;
-
-  public request = new FormControl('', Validators.required);
 
   private documentsSubscription: Subscription | undefined;
 
   constructor(
     private documentService: DocumentService,
     private router: Router
-  ) {
-    this.items = [];
-  }
+  ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -46,6 +38,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.documentsSubscription = this.documentService.getAll().subscribe({
       next: (data: Document[]) => {
         this.items = data;
+        this.allItems = data;
 
         this.isLoading = false;
       },
@@ -56,9 +49,17 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.documentsSubscription?.unsubscribe();
   }
 
-  activeItemChanged(item: any): void {
+  changeActiveItem(item: any): void {
     this.router.navigate(['/documents', item.id]);
   }
 
-  search(value: string): void {}
+  search(value: string): void {
+    this.items = this.allItems.filter((item: CustomItem) =>
+      item.text.toLowerCase().includes(value.toLowerCase())
+    );
+  }
+
+  clear(): void {
+    this.items = this.allItems;
+  }
 }

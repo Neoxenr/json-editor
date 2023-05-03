@@ -4,17 +4,14 @@
     prizmInput
     placeholder="Запрос"
     (enter)="search($event)"
-    [formControl]="request"
+    (onClear)="clear()"
   />
   <button
     prizm-input-right
     prizmInputIconButton="sort-zoom-in"
-    (click)="search(input.value)"
     [interactive]="true"
+    (click)="search(input.value)"
   ></button>
-  <ng-template prizmInputStatusText [control]="input"></ng-template>
-  <prizm-input-status-subtext prizm-input-subtext [control]="input">
-  </prizm-input-status-subtext>
 </prizm-input-layout>
 <prizm-loader class="loader" *ngIf="isLoading" [showLoader]="isLoading">
 </prizm-loader>
@@ -22,7 +19,7 @@
   <prizm-scrollbar class="scrollbar">
     <prizm-navigation-menu
       [items]="items"
-      (activeItemChanged)="activeItemChanged($event)"
+      (activeItemChanged)="changeActiveItem($event)"
     ></prizm-navigation-menu>
   </prizm-scrollbar>
 </div>
