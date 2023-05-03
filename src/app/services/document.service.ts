@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 
 // RxJS
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 // Models
 import { Document } from '../models/document';

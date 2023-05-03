@@ -1,5 +1,9 @@
 <prizm-widget title="Информация о документе" [icons]="['settings-more-vert']">
-  <prizm-input-layout label="Название документа" [outer]="true">
+  <prizm-input-layout
+    label="Название документа"
+    [outer]="true"
+    [prizmSkeleton]="isLoading"
+  >
     <input
       #nameInput
       prizmInput
@@ -10,7 +14,7 @@
     <prizm-input-status-subtext prizm-input-subtext [control]="nameInput">
     </prizm-input-status-subtext>
   </prizm-input-layout>
-  <prizm-input-layout label="Описание документа" [outer]="true">
+  <prizm-input-layout label="Описание документа" [outer]="true" [prizmSkeleton]="isLoading">
     <input
       #descriptionInput
       prizmInput
@@ -35,9 +39,10 @@
   (iconClick)="onIconClick($event)"
 >
   <prizm-input-layout
-    class="input-layout"
+    class="textarea"
     label="Содержимое документа"
     [outer]="true"
+    [prizmSkeleton]="isLoading"
   >
     <textarea
       #textarea
@@ -53,7 +58,14 @@
 <button
   prizmButton
   class="btn-save"
-  [disabled]="name.invalid || description.invalid || configuration.invalid"
+  [disabled]="
+    name.invalid ||
+    description.invalid ||
+    configuration.invalid ||
+    (name.pristine && description.pristine && configuration.pristine)
+  "
+  [prizmSkeleton]="isLoading"
+  [showLoader]="isSaving"
   (click)="onClickSave()"
 >
   Сохранить изменения

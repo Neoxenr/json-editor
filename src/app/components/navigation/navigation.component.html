@@ -4,7 +4,7 @@
     prizmInput
     placeholder="Запрос"
     (enter)="search($event)"
-    [formControl]="requiredInputControl"
+    [formControl]="request"
   />
   <button
     prizm-input-right
@@ -16,6 +16,8 @@
   <prizm-input-status-subtext prizm-input-subtext [control]="input">
   </prizm-input-status-subtext>
 </prizm-input-layout>
+<prizm-loader class="loader" *ngIf="isLoading" [showLoader]="isLoading">
+</prizm-loader>
 <div class="navigation">
   <prizm-scrollbar class="scrollbar">
     <prizm-navigation-menu

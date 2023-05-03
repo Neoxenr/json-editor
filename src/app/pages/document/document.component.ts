@@ -22,7 +22,6 @@ import { Document } from '../../models/document';
   templateUrl: './document.component.html',
   styleUrls: ['./document.component.less'],
   providers: [DocumentService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DocumentComponent implements OnInit, OnDestroy {
   public name: FormControl = new FormControl('', Validators.required);
@@ -31,6 +30,9 @@ export class DocumentComponent implements OnInit, OnDestroy {
     Validators.required,
     this.configurationValidator.bind(this),
   ]);
+
+  public isLoading: boolean = false;
+  public isSaving: boolean = false;
 
   private id: string = '';
 
@@ -47,7 +49,11 @@ export class DocumentComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.documentSubscription = this.activatedRoute.paramMap
       .pipe(
-        switchMap((params: ParamMap) => params.getAll('id')),
+        switchMap((params: ParamMap) => {
+          this.isLoading = true;
+
+          return params.getAll('id');
+        }),
         mergeMap((id: string) => {
           this.id = id;
 
@@ -56,11 +62,17 @@ export class DocumentComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (data: Document | undefined) => {
+          this.name.reset();
+          this.description.reset();
+          this.configuration.reset();
+
           this.name.setValue(data?.text);
           this.description.setValue(data?.description);
           this.configuration.setValue(data?.configuration);
 
           this.onIconClick('editor-auto');
+
+          this.isLoading = false;
         },
       });
   }
@@ -85,13 +97,15 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   onClickSave(): void {
+    this.isSaving = true;
+
     this.updateSubscription = this.documentService
       .update(this.id, {
         text: this.name.value,
         description: this.description.value,
         configuration: this.configuration.value,
       })
-      .subscribe();
+      .subscribe({ next: () => (this.isSaving = false) });
   }
 
   configurationValidator(

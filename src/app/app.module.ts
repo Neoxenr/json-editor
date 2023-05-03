@@ -12,7 +12,8 @@ import {
   PrizmWidgetModule,
   PrizmScrollbarModule,
   PrizmNavigationMenuModule,
-  PrizmPanelModule,
+  PrizmLoaderModule,
+  PrizmSkeletonModule,
 } from '@prizm-ui/components';
 import { PrizmThemeModule } from '@prizm-ui/theme';
 import { PrizmIconsSvgModule } from '@prizm-ui/icons';
@@ -46,7 +47,8 @@ import { DocumentComponent } from './pages/document/document.component';
     PrizmInputTextModule,
     PrizmIconsSvgModule,
     PrizmNavigationMenuModule,
-    PrizmPanelModule,
+    PrizmSkeletonModule,
+    PrizmLoaderModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

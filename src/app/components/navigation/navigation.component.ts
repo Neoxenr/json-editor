@@ -23,12 +23,13 @@ import { DocumentService } from '../../services/document.service';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.less'],
   providers: [DocumentService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationComponent implements OnInit, OnDestroy {
-  public requiredInputControl = new FormControl('', Validators.required);
-
   public items: CustomItem[];
+
+  public isLoading: boolean = false;
+
+  public request = new FormControl('', Validators.required);
 
   private documentsSubscription: Subscription | undefined;
 
@@ -40,9 +41,13 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
+
     this.documentsSubscription = this.documentService.getAll().subscribe({
       next: (data: Document[]) => {
         this.items = data;
+
+        this.isLoading = false;
       },
     });
   }
