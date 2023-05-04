@@ -1,6 +1,5 @@
 // Angular
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 // RxJS
@@ -26,6 +25,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   public isLoading: boolean = false;
 
   private documentsSubscription: Subscription | undefined;
+  private createDocumentSubscription: Subscription | undefined;
 
   constructor(
     private documentService: DocumentService,
@@ -47,19 +47,39 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.documentsSubscription?.unsubscribe();
+
+    this.createDocumentSubscription?.unsubscribe();
   }
 
-  changeActiveItem(item: any): void {
+  changeActiveItem(item: CustomItem): void {
     this.router.navigate(['/documents', item.id]);
   }
 
-  search(value: string): void {
+  onSearch(value: string): void {
     this.items = this.allItems.filter((item: CustomItem) =>
       item.text.toLowerCase().includes(value.toLowerCase())
     );
   }
 
-  clear(): void {
+  onClear(): void {
     this.items = this.allItems;
+  }
+
+  onClickAdd(): void {
+    this.createDocumentSubscription = this.documentService
+      .create({
+        text: 'Без названия',
+        description: '',
+        configuration: '{}',
+      })
+      .subscribe({
+        next: (document: Document) => {
+          this.allItems = [document, ...this.allItems];
+
+          this.items = this.allItems;
+
+          this.router.navigate(['/documents', document.id]);
+        },
+      });
   }
 }

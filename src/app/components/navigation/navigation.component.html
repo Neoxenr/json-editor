@@ -1,18 +1,21 @@
-<prizm-input-layout label="Выбор конфигурационного файла" [outer]="true">
-  <input
-    #input
-    prizmInput
-    placeholder="Запрос"
-    (enter)="search($event)"
-    (onClear)="clear()"
-  />
-  <button
-    prizm-input-right
-    prizmInputIconButton="sort-zoom-in"
-    [interactive]="true"
-    (click)="search(input.value)"
-  ></button>
-</prizm-input-layout>
+<div class="header">
+  <prizm-input-layout label="Выбор конфигурационного файла" [outer]="true">
+    <input
+      #input
+      prizmInput
+      placeholder="Запрос"
+      (enter)="onSearch($event)"
+      (onClear)="onClear()"
+    />
+    <button
+      prizm-input-right
+      prizmInputIconButton="sort-zoom-in"
+      [interactive]="true"
+      (click)="onSearch(input.value)"
+    ></button>
+  </prizm-input-layout>
+  <button class="btn-add" prizmIconButton size="m" icon="add-plus" (click)="onClickAdd()"></button>
+</div>
 <prizm-loader class="loader" *ngIf="isLoading" [showLoader]="isLoading">
 </prizm-loader>
 <div class="navigation">

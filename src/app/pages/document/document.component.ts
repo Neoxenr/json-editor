@@ -25,7 +25,7 @@ import { Document } from '../../models/document';
 })
 export class DocumentComponent implements OnInit, OnDestroy {
   public form: FormGroup = new FormGroup({
-    name: new FormControl('', Validators.required),
+    text: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
     configuration: new FormControl('{}', [
       Validators.required,
@@ -67,7 +67,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
           this.form.reset();
 
           this.form.setValue({
-            name: data?.text,
+            text: data?.text,
             description: data?.description,
             configuration: data?.configuration,
           });

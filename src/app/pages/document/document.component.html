@@ -8,7 +8,7 @@
       #nameInput
       prizmInput
       placeholder="Введенный текст"
-      [formControl]="$any(form.controls['name'])"
+      [formControl]="$any(form.controls['text'])"
     />
     <ng-template prizmInputStatusText [control]="nameInput"></ng-template>
     <prizm-input-status-subtext prizm-input-subtext [control]="nameInput">
