@@ -6,10 +6,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 // RxJS
 import { Subscription } from 'rxjs';
-import { mergeMap, switchMap } from 'rxjs/operators';
+import { catchError, mergeMap, switchMap } from 'rxjs/operators';
 
 // Services
 import { DocumentService } from '../../services/document.service';
+import { RequestErrorHandlerService } from '../../services/request-error-handler.service';
 
 // Models
 import { Document } from '../../models/document';
@@ -41,8 +42,9 @@ export class DocumentComponent implements OnInit, OnDestroy {
   private documentDeleteSubscription: Subscription | undefined;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
+    private requestErrorHandlerService: RequestErrorHandlerService,
     private documentService: DocumentService,
+    private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
 
@@ -58,7 +60,10 @@ export class DocumentComponent implements OnInit, OnDestroy {
           this.id = id;
 
           return this.documentService.getById(id);
-        })
+        }),
+        catchError((err: HttpErrorResponse) =>
+          this.requestErrorHandlerService.handleError(err)
+        )
       )
       .subscribe({
         next: (data: Document) => {
@@ -73,14 +78,6 @@ export class DocumentComponent implements OnInit, OnDestroy {
           this.onIconClick('editor-auto');
 
           this.isLoading = false;
-        },
-        error: (err: HttpErrorResponse) => {
-          this.router.navigate(['/error'], {
-            queryParams: {
-              status: err.status,
-              message: err.statusText,
-            },
-          });
         },
       });
   }
@@ -111,6 +108,11 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
     this.documentUpdateSubscription = this.documentService
       .update(this.id, this.form.value)
+      .pipe(
+        catchError((err: HttpErrorResponse) =>
+          this.requestErrorHandlerService.handleError(err)
+        )
+      )
       .subscribe({
         next: () => {
           this.isSaving = false;
@@ -123,6 +125,11 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
     this.documentDeleteSubscription = this.documentService
       .delete(this.id)
+      .pipe(
+        catchError((err: HttpErrorResponse) =>
+          this.requestErrorHandlerService.handleError(err)
+        )
+      )
       .subscribe({
         next: () => {
           this.isDeleting = false;

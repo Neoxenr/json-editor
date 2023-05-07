@@ -1,9 +1,11 @@
 // Angular
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 // RxJS
 import { Subscription } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 // Models
 import { Document } from '../../models/document';
@@ -11,6 +13,7 @@ import { CustomItem } from '../../models/custom-item';
 
 // Services
 import { DocumentService } from '../../services/document.service';
+import { RequestErrorHandlerService } from '../../services/request-error-handler.service';
 
 @Component({
   selector: 'app-navigation',
@@ -28,6 +31,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   private createDocumentSubscription: Subscription | undefined;
 
   constructor(
+    private requestErrorHandlerService: RequestErrorHandlerService,
     private documentService: DocumentService,
     private router: Router
   ) {}
@@ -35,14 +39,21 @@ export class NavigationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isLoading = true;
 
-    this.getAllDocumentsSubscription = this.documentService.getAll().subscribe({
-      next: (data: Document[]) => {
-        this.items = data;
-        this.allItems = data;
+    this.getAllDocumentsSubscription = this.documentService
+      .getAll()
+      .pipe(
+        catchError((err: HttpErrorResponse) =>
+          this.requestErrorHandlerService.handleError(err)
+        )
+      )
+      .subscribe({
+        next: (data: Document[]) => {
+          this.items = data;
+          this.allItems = data;
 
-        this.isLoading = false;
-      },
-    });
+          this.isLoading = false;
+        },
+      });
   }
 
   ngOnDestroy(): void {
@@ -72,6 +83,11 @@ export class NavigationComponent implements OnInit, OnDestroy {
         description: '',
         configuration: '{}',
       })
+      .pipe(
+        catchError((err: HttpErrorResponse) =>
+          this.requestErrorHandlerService.handleError(err)
+        )
+      )
       .subscribe({
         next: (document: Document) => {
           this.router.navigate(['/documents', document.id]);
