@@ -1,4 +1,8 @@
+// Angular
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+// Prizm UI
 import { PrizmThemeService } from '@prizm-ui/theme';
 
 @Component({
@@ -7,9 +11,10 @@ import { PrizmThemeService } from '@prizm-ui/theme';
   styleUrls: ['./app.component.less'],
 })
 export class AppComponent implements OnInit {
-  title = 'json-editor';
-
-  constructor(public readonly theme: PrizmThemeService) {}
+  constructor(
+    private readonly theme: PrizmThemeService,
+    public router: Router
+  ) {}
 
   ngOnInit(): void {
     this.theme.update('dark');

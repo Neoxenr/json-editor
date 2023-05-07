@@ -1,2 +1,2 @@
-<app-navigation></app-navigation>
+<app-navigation *ngIf="!router.url.includes('/error')"></app-navigation>
 <router-outlet></router-outlet>

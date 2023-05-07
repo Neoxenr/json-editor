@@ -14,6 +14,7 @@ import {
   PrizmNavigationMenuModule,
   PrizmLoaderModule,
   PrizmSkeletonModule,
+  PrizmErrorPageModule
 } from '@prizm-ui/components';
 import { PrizmThemeModule } from '@prizm-ui/theme';
 import { PrizmIconsSvgModule } from '@prizm-ui/icons';
@@ -26,6 +27,7 @@ import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { DocumentsComponent } from './pages/documents/documents.component';
 import { DocumentComponent } from './pages/document/document.component';
+import { ErrorComponent } from './pages/error/error.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { DocumentComponent } from './pages/document/document.component';
     NavigationComponent,
     DocumentsComponent,
     DocumentComponent,
+    ErrorComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -49,6 +52,7 @@ import { DocumentComponent } from './pages/document/document.component';
     PrizmNavigationMenuModule,
     PrizmSkeletonModule,
     PrizmLoaderModule,
+    PrizmErrorPageModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,12 +1,8 @@
 // Angular
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 // RxJS
 import { Subscription } from 'rxjs';
@@ -21,7 +17,6 @@ import { Document } from '../../models/document';
   selector: 'app-document',
   templateUrl: './document.component.html',
   styleUrls: ['./document.component.less'],
-  providers: [DocumentService],
 })
 export class DocumentComponent implements OnInit, OnDestroy {
   public form: FormGroup = new FormGroup({
@@ -35,17 +30,20 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
   public isLoading: boolean = false;
   public isSaving: boolean = false;
+  public isDeleting: boolean = false;
 
   private id: string = '';
 
   private parsedConfiguration: Object = {};
 
   private documentSubscription: Subscription | undefined;
-  private updateSubscription: Subscription | undefined;
+  private documentUpdateSubscription: Subscription | undefined;
+  private documentDeleteSubscription: Subscription | undefined;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private documentService: DocumentService
+    private documentService: DocumentService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -63,18 +61,26 @@ export class DocumentComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe({
-        next: (data: Document | undefined) => {
+        next: (data: Document) => {
           this.form.reset();
 
           this.form.setValue({
-            text: data?.text,
-            description: data?.description,
-            configuration: data?.configuration,
+            text: data.text,
+            description: data.description,
+            configuration: data.configuration,
           });
 
           this.onIconClick('editor-auto');
 
           this.isLoading = false;
+        },
+        error: (err: HttpErrorResponse) => {
+          this.router.navigate(['/error'], {
+            queryParams: {
+              status: err.status,
+              message: err.statusText,
+            },
+          });
         },
       });
   }
@@ -82,7 +88,9 @@ export class DocumentComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.documentSubscription?.unsubscribe();
 
-    this.updateSubscription?.unsubscribe();
+    this.documentUpdateSubscription?.unsubscribe();
+
+    this.documentDeleteSubscription?.unsubscribe();
   }
 
   onIconClick(iconName: string): void {
@@ -101,9 +109,27 @@ export class DocumentComponent implements OnInit, OnDestroy {
   onClickSave(): void {
     this.isSaving = true;
 
-    this.updateSubscription = this.documentService
+    this.documentUpdateSubscription = this.documentService
       .update(this.id, this.form.value)
-      .subscribe({ next: () => (this.isSaving = false) });
+      .subscribe({
+        next: () => {
+          this.isSaving = false;
+        },
+      });
+  }
+
+  onClickDelete(): void {
+    this.isDeleting = true;
+
+    this.documentDeleteSubscription = this.documentService
+      .delete(this.id)
+      .subscribe({
+        next: () => {
+          this.isDeleting = false;
+
+          this.router.navigate(['/documents']);
+        },
+      });
   }
 
   configurationValidator(

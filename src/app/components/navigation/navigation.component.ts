@@ -16,15 +16,15 @@ import { DocumentService } from '../../services/document.service';
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.less'],
-  providers: [DocumentService],
 })
 export class NavigationComponent implements OnInit, OnDestroy {
   public items: CustomItem[] = [];
+
   public allItems: CustomItem[] = [];
 
   public isLoading: boolean = false;
 
-  private documentsSubscription: Subscription | undefined;
+  private getAllDocumentsSubscription: Subscription | undefined;
   private createDocumentSubscription: Subscription | undefined;
 
   constructor(
@@ -35,7 +35,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isLoading = true;
 
-    this.documentsSubscription = this.documentService.getAll().subscribe({
+    this.getAllDocumentsSubscription = this.documentService.getAll().subscribe({
       next: (data: Document[]) => {
         this.items = data;
         this.allItems = data;
@@ -46,7 +46,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.documentsSubscription?.unsubscribe();
+    this.getAllDocumentsSubscription?.unsubscribe();
 
     this.createDocumentSubscription?.unsubscribe();
   }
@@ -56,7 +56,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   onSearch(value: string): void {
-    this.items = this.allItems.filter((item: CustomItem) =>
+    this.items = this.items.filter((item: CustomItem) =>
       item.text.toLowerCase().includes(value.toLowerCase())
     );
   }
@@ -74,10 +74,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
       })
       .subscribe({
         next: (document: Document) => {
-          this.allItems = [document, ...this.allItems];
-
-          this.items = this.allItems;
-
           this.router.navigate(['/documents', document.id]);
         },
       });
