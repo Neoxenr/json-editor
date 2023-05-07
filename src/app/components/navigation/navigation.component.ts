@@ -67,7 +67,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   onSearch(value: string): void {
-    this.items = this.items.filter((item: CustomItem) =>
+    this.items = this.allItems.filter((item: CustomItem) =>
       item.text.toLowerCase().includes(value.toLowerCase())
     );
   }
