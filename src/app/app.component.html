@@ -1,1 +1,2 @@
-<button prizmButton>Left Icon</button>
+<app-navigation *ngIf="!router.url.includes('/error')"></app-navigation>
+<router-outlet></router-outlet>

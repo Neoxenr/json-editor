@@ -1,0 +1,83 @@
+<prizm-widget class="info" title="Информация о документе" [icons]="['settings-more-vert']">
+  <prizm-input-layout
+    label="Название документа"
+    [outer]="true"
+    [prizmSkeleton]="isLoading"
+  >
+    <input
+      #nameInput
+      prizmInput
+      placeholder="Введенный текст"
+      [formControl]="$any(form.controls['text'])"
+    />
+    <ng-template prizmInputStatusText [control]="nameInput"
+      >Обязательное поле</ng-template
+    >
+    <prizm-input-status-subtext prizm-input-subtext [control]="nameInput">
+    </prizm-input-status-subtext>
+  </prizm-input-layout>
+  <prizm-input-layout
+    label="Описание документа"
+    class="description"
+    [outer]="true"
+    [prizmSkeleton]="isLoading"
+  >
+    <input
+      #descriptionInput
+      prizmInput
+      placeholder="Введенный текст"
+      [formControl]="$any(form.controls['description'])"
+    />
+    <ng-template prizmInputStatusText [control]="descriptionInput"
+      >Обязательное поле</ng-template
+    >
+    <prizm-input-status-subtext
+      prizm-input-subtext
+      [control]="descriptionInput"
+    >
+    </prizm-input-status-subtext>
+  </prizm-input-layout>
+</prizm-widget>
+<prizm-widget
+  class="configuration"
+  title="Конфигурация"
+  [icons]="['editor-auto', 'settings-more-vert']"
+  (iconClick)="onIconClick($event)"
+>
+  <prizm-input-layout
+    class="textarea"
+    label="Содержимое документа"
+    [outer]="true"
+    [prizmSkeleton]="isLoading"
+  >
+    <textarea
+      #textarea
+      prizmInput
+      placeholder="Введите текст"
+      [formControl]="$any(form.controls['configuration'])"
+    ></textarea>
+    <div class="error" *ngIf="textarea.invalid">Некорректная конфигурация</div>
+    <ng-template prizmInputStatusText>Некорректная конфигурация</ng-template>
+  </prizm-input-layout>
+</prizm-widget>
+<div class="btn-group">
+  <button
+    prizmButton
+    size="xm"
+    [disabled]="form.invalid || form.pristine"
+    [prizmSkeleton]="isLoading"
+    [showLoader]="isSaving"
+    (click)="onClickSave()"
+  >
+    Сохранить изменения
+  </button>
+  <button
+    prizmButton
+    size="xm"
+    [prizmSkeleton]="isLoading"
+    [showLoader]="isDeleting"
+    (click)="onClickDelete()"
+  >
+    Удалить документ
+  </button>
+</div>

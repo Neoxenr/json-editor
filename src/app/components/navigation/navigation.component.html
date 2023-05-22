@@ -1,0 +1,31 @@
+<div class="header">
+  <prizm-input-layout label="Выбор конфигурационного файла" [outer]="true">
+    <input
+      #input
+      prizmInput
+      placeholder="Запрос"
+      (enter)="onSearch($event)"
+      (onClear)="onClear()"
+    />
+    <button
+      prizm-input-right
+      prizmInputIconButton="sort-zoom-in"
+      [interactive]="true"
+      (click)="onSearch(input.value)"
+    ></button>
+  </prizm-input-layout>
+  <button prizmButton size="xm" (click)="onClickAdd()">
+    Добавить документ
+  </button>
+</div>
+<prizm-loader class="loader" *ngIf="isLoading" [showLoader]="isLoading">
+</prizm-loader>
+<div class="navigation">
+  <prizm-scrollbar class="scrollbar">
+    <prizm-navigation-menu
+      [items]="items"
+      [activeItem]="items[4]"
+      (activeItemChanged)="changeActiveItem($event)"
+    ></prizm-navigation-menu>
+  </prizm-scrollbar>
+</div>
